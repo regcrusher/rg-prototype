@@ -5,6 +5,9 @@ module.exports = {
   darkMode: false,
   theme: {
     extend: {},
+    container: {
+      center: true,
+    },
   },
   variants: {
     extend: {},

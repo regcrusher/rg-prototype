@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container container-xl">
     <MoviesHome msg="New York Times Movie Reviews"/>
   </div>
 </template>

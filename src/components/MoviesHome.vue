@@ -2,6 +2,8 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
+    <MovieSearch @searchMovies="searchMovies($event)" />
+
     <div v-if="movies === null">
       No movies found
     </div>
@@ -21,6 +23,7 @@
 
 <script>
 import Movie from "./Movie";
+import MovieSearch from "./MovieSearch";
 
 const axios = require("axios");
 
@@ -32,7 +35,30 @@ export default {
   data: function() {
     return { movies: {} };
   },
-  components: { Movie },
+  components: { Movie, MovieSearch },
+  methods: {
+    searchMovies(searchTerm) {
+      
+      console.log("Searched for " + searchTerm);
+
+      axios
+        .get("https://api.nytimes.com/svc/movies/v2/reviews/search.json", {
+          params: {
+            "api-key": process.env.VUE_APP_NYT_API_KEY,
+            query: searchTerm
+          },
+        })
+        .then((response) => {
+          // handle success
+          this.movies = response.data.results;
+          console.log(response.data.results);
+        })
+        .catch((response) => {
+          // handle error
+          console.log(response);
+        });
+    },
+  },
   mounted() {
     // console.log(process.env)
     axios
