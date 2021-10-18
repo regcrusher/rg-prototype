@@ -14,8 +14,7 @@
           v-for="movie in movies"
           v-bind:key="movie.link.url"
           :movie="movie"
-        >
-        </Movie>
+        />
       </div>
     </div>
   </div>
@@ -37,45 +36,43 @@ export default {
   },
   components: { Movie, MovieSearch },
   methods: {
-    searchMovies(searchTerm) {
+    async searchMovies(searchTerm) {
+      try {
+        const resp = await axios.get(
+          "https://api.nytimes.com/svc/movies/v2/reviews/search.json",
+          {
+            params: {
+              "api-key": process.env.VUE_APP_NYT_API_KEY,
+              query: searchTerm,
+            },
+          }
+        );
 
-      console.log("Searched for " + searchTerm);
+        this.movies = resp.data.results;
+      } catch (err) {
+        console.warn(err);
+      }
+    },
+    async getAllMovies(offset = 0) {
+      try {
+        const resp = await axios.get(
+          "https://api.nytimes.com/svc/movies/v2/reviews/all.json",
+          {
+            params: {
+              "api-key": process.env.VUE_APP_NYT_API_KEY,
+              offset: offset,
+            },
+          }
+        );
 
-      axios
-        .get("https://api.nytimes.com/svc/movies/v2/reviews/search.json", {
-          params: {
-            "api-key": process.env.VUE_APP_NYT_API_KEY,
-            query: searchTerm
-          },
-        })
-        .then((response) => {
-          // handle success
-          this.movies = response.data.results;
-          console.log(response.data.results);
-        })
-        .catch((response) => {
-          // handle error
-          console.log(response);
-        });
+        this.movies = resp.data.results;
+      } catch (err) {
+        console.warn(err);
+      }
     },
   },
   mounted() {
-    // console.log(process.env)
-    axios
-      .get("https://api.nytimes.com/svc/movies/v2/reviews/all.json", {
-        params: {
-          "api-key": process.env.VUE_APP_NYT_API_KEY,
-        },
-      })
-      .then((response) => {
-        // handle success
-        this.movies = response.data.results;
-        console.log(response.data.results);
-      })
-      .catch((response) => {
-        // handle error
-        console.log(response);
-      });
+    this.getAllMovies(0);
   },
 };
 </script>
@@ -83,7 +80,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
-  font-family: "Chivo", sans-serif
+  font-family: "Chivo", sans-serif;
 }
 h3 {
   margin: 40px 0 0;
