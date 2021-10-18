@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input v-model="searchTerm" placeholder="Enter your search term" />  <button v-on:click="searchMovies">Search</button>
+    <input v-model="searchTerm" placeholder="Enter your search term" />  <button v-on:click="searchMovies">Search Movies</button>
     <p>Search Term: {{ escapedSearchTerm }}</p>
   </div>
 </template>

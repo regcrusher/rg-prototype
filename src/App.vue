@@ -18,7 +18,7 @@ export default {
 <style>
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
-  font-family: "Merriweather", sans-serif;
+  font-family: "Overpass", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

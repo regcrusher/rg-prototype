@@ -1,13 +1,12 @@
 <template>
-  <div class="w-1/4">
-    <div class="card mx-2">
+  <div class="w-1/4 ">
+    <div class="card  border-2 mx-2 mb-4">
+     
       <a :href="movie.link.url">
         <img class="rounded-t-lg" :src="movie.multimedia.src" alt="" />
       </a>
-      <div class="pt-2 px-3">
-        <a :href="movie.link.url">
-          <h5 class>{{ movie.display_title }}</h5>
-        </a>
+      <div class="pt-2 px-2 pb-6">
+        <div class="card__title text-xl mt-2 pb-1"><a :href="movie.link.url">{{ movie.display_title }} </a></div>
         <p class="font-normal text-gray-700 mb-3">{{ movie.summary_short }}</p>
       </div>
     </div>
@@ -22,3 +21,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .card__title {
+    font-family: 'Chivo', sans-serif;
+    
+  }
+</style>
