@@ -1,18 +1,18 @@
 <template>
   <div id="app" class="container container-xl">
-    <MoviesHome msg="New York Times Movie Reviews"/>
+    <MoviesHome msg="New York Times Movie Reviews" />
   </div>
 </template>
 
 <script>
-import MoviesHome from './components/MoviesHome.vue'
+import MoviesHome from "./components/MoviesHome.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    MoviesHome 
-  }
-}
+    MoviesHome,
+  },
+};
 </script>
 
 <style>
@@ -21,5 +21,6 @@ export default {
   font-family: "Overpass", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #333333;
 }
 </style>
