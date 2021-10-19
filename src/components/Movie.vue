@@ -8,6 +8,12 @@
           :src="movie.multimedia.src"
           :alt="movie.display_title"
         />
+        <img
+          v-if="movie.multimedia === null"
+          class="rounded-t-lg motion-safe:hover:scale-110"
+          src="https://via.placeholder.com/420x280"
+          alt="FPO"
+        />
       </a>
       <div class="pt-2 px-2 pb-6">
         <div class="card__title text-xl mt-2 pb-1">
