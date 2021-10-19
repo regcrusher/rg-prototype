@@ -3,6 +3,7 @@
     <div class="card  border-2 mx-2 mb-4">
       <a :href="movie.link.url">
         <img
+          v-if="movie.multimedia"
           class="rounded-t-lg motion-safe:hover:scale-110"
           :src="movie.multimedia.src"
           :alt="movie.display_title"
