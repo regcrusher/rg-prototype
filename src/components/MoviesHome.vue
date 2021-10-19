@@ -4,9 +4,7 @@
 
     <MovieSearch @searchMovies="searchMovies($event)" />
 
-    <div v-if="movies === null">
-      No movies found
-    </div>
+    <div v-if="movies === null">No movies found</div>
 
     <div v-if="movies">
       <div class="mx-auto flex flex-wrap">
@@ -17,6 +15,8 @@
         />
       </div>
     </div>
+
+    <div class="text-center text-xs">{{ copyright }}</div>
   </div>
 </template>
 
@@ -32,7 +32,10 @@ export default {
     msg: String,
   },
   data: function() {
-    return { movies: {} };
+    return {
+      movies: {},
+      copyright: "",
+    };
   },
   components: { Movie, MovieSearch },
   methods: {
@@ -49,6 +52,7 @@ export default {
         );
 
         this.movies = resp.data.results;
+        this.copyright = resp.data.copyright;
       } catch (err) {
         console.warn(err);
       }
@@ -66,6 +70,7 @@ export default {
         );
 
         this.movies = resp.data.results;
+        this.copyright = resp.data.copyright;
       } catch (err) {
         console.warn(err);
       }
