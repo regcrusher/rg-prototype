@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/4 ">
+  <div class="sm:w-1/2 md:w-1/2 lg:w-1/3 ">
     <div class="card  border-2 mx-2 mb-4">
       <a :href="movie.link.url">
         <img
