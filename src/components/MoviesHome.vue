@@ -9,7 +9,7 @@
     <div v-if="movies">
       <div class="mx-auto flex flex-wrap">
         <Movie
-          v-for="movie in movies"
+          v-for="movie in moviesFromStore"
           v-bind:key="movie.link.url"
           :movie="movie"
         />
@@ -37,6 +37,11 @@ export default {
       copyright: "",
     };
   },
+  computed: {
+    moviesFromStore() {
+      return this.$store.getters.movieResults;
+    },
+  },
   components: { Movie, MovieSearch },
   methods: {
     async searchMovies(searchTerm) {
@@ -51,7 +56,7 @@ export default {
           }
         );
 
-        this.movies = resp.data.results;
+        this.$store.commit("updateMovieResults", resp.data.results);
         this.copyright = resp.data.copyright;
       } catch (err) {
         console.warn(err);
@@ -68,8 +73,9 @@ export default {
             },
           }
         );
+        console.log(this);
 
-        this.movies = resp.data.results;
+        this.$store.commit("updateMovieResults", resp.data.results);
         this.copyright = resp.data.copyright;
       } catch (err) {
         console.warn(err);
