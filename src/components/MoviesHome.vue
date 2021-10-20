@@ -33,6 +33,7 @@ import Movie from "./Movie";
 import MovieSearch from "./MovieSearch";
 
 const axios = require("axios");
+const moviesPerPage = 20;
 
 export default {
   name: "MoviesHome",
@@ -112,11 +113,11 @@ export default {
     },
     goToNextPage() {
       let newIndex = this.pageIndex + 1;
-      this.searchMovies(this.searchTerm, 20 * newIndex, newIndex);
+      this.searchMovies(this.searchTerm, moviesPerPage * newIndex, newIndex);
     },
     goToPrevPage() {
       let newIndex = this.pageIndex - 1;
-      this.searchMovies(this.searchTerm, 20 * newIndex, newIndex);
+      this.searchMovies(this.searchTerm, moviesPerPage * newIndex, newIndex);
     },
   },
   mounted() {
