@@ -6,15 +6,27 @@
 
     <div v-if="movies === null">No movies found</div>
 
-    <button :disabled="pageIndex <= 0" @click="goToPrevPage($event)">
-      Prev
-    </button>
-    {{ pageIndexForDisplay }}
-    <button :disabled="!hasMore" @click="goToNextPage($event)">
-      Next
-    </button>
+    <div class="text-center pager mx-auto my-5">
+      <button
+        :class="{ invisible: pageIndex <= 0 }"
+        :disabled="pageIndex <= 0"
+        @click="goToPrevPage($event)"
+      >
+        &lt; Prev
+      </button>
+      <span class="mx-10"> Page {{ pageIndexForDisplay }}</span>
+      <button
+        :class="{ invisible: !hasMore }"
+        :disabled="!hasMore"
+        @click="goToNextPage($event)"
+      >
+        Next &gt;
+      </button>
+    </div>
 
-    <div v-if="movies">
+    <Spinner v-if="loading" />
+
+    <div v-if="movies && !loading">
       <div class="mx-auto flex flex-wrap">
         <Movie
           v-for="movie in moviesFromStore"
@@ -31,6 +43,7 @@
 <script>
 import Movie from "./Movie";
 import MovieSearch from "./MovieSearch";
+import Spinner from "./Spinner";
 
 const axios = require("axios");
 const moviesPerPage = 20;
@@ -45,6 +58,7 @@ export default {
       movies: {},
       copyright: "",
       hasMore: false,
+      loading: true,
     };
   },
   computed: {
@@ -61,20 +75,22 @@ export default {
       return this.$store.getters.searchTerm;
     },
   },
-  components: { Movie, MovieSearch },
+  components: { Movie, MovieSearch, Spinner },
   methods: {
     async searchMovies(searchTerm, offset = 0, pageIndex = 0) {
       try {
-        const resp = await axios.get(
-          "https://api.nytimes.com/svc/movies/v2/reviews/search.json",
-          {
+        this.loading = true;
+        const resp = await axios
+          .get("https://api.nytimes.com/svc/movies/v2/reviews/search.json", {
             params: {
               "api-key": process.env.VUE_APP_NYT_API_KEY,
               query: searchTerm,
               offset,
             },
-          }
-        );
+          })
+          .finally(() => {
+            this.loading = false;
+          });
 
         this.$store.commit("updateMovieResults", {
           results: resp.data.results,
@@ -112,10 +128,12 @@ export default {
       }
     },
     goToNextPage() {
+      this.loading = true;
       let newIndex = this.pageIndex + 1;
       this.searchMovies(this.searchTerm, moviesPerPage * newIndex, newIndex);
     },
     goToPrevPage() {
+      this.loading = true;
       let newIndex = this.pageIndex - 1;
       this.searchMovies(this.searchTerm, moviesPerPage * newIndex, newIndex);
     },
