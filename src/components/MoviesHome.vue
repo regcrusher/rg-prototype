@@ -4,7 +4,11 @@
 
     <MovieSearch @searchMovies="searchMovies($event)" />
 
-    <div v-if="movies === null">No movies found</div>
+    <div v-if="movies === null">
+      No movies found
+    </div>
+
+    <div class="text-center" v-if="errorMessage">{{ errorMessage }}</div>
 
     <div class="text-center pager mx-auto my-5">
       <button
@@ -59,6 +63,7 @@ export default {
       copyright: "",
       hasMore: false,
       loading: true,
+      errorMessage: "",
     };
   },
   computed: {
@@ -79,6 +84,7 @@ export default {
   methods: {
     async searchMovies(searchTerm, offset = 0, pageIndex = 0) {
       try {
+        this.errorMessage = "";
         this.loading = true;
         const resp = await axios
           .get("https://api.nytimes.com/svc/movies/v2/reviews/search.json", {
@@ -101,6 +107,9 @@ export default {
         this.hasMore = resp.data.has_more;
       } catch (err) {
         console.warn(err);
+        console.log(err);
+        this.errorMessage = err;
+        this.movies = {};
       }
     },
     async getAllMovies(offset = 0) {
