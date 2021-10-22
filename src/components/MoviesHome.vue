@@ -13,6 +13,7 @@
     <div class="text-center pager mx-auto my-5">
       <button
         :class="{ invisible: pageIndex <= 0 }"
+        class="hover:underline"
         :disabled="pageIndex <= 0"
         @click="goToPrevPage($event)"
       >
@@ -21,6 +22,7 @@
       <span class="mx-10"> Page {{ pageIndexForDisplay }}</span>
       <button
         :class="{ invisible: !hasMore }"
+        class="hover:underline"
         :disabled="!hasMore"
         @click="goToNextPage($event)"
       >
