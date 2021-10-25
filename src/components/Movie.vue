@@ -1,16 +1,16 @@
 <template>
   <div class="sm:w-1/2 md:w-1/2 lg:w-1/3 ">
-    <div class="flex flex-col card  border-2 mx-2 mb-4">
+    <div class="flex flex-col card  rounded-t-lg border-2 mx-2 mb-4">
       <a :href="movie.link.url" :aria-label="movie.display_title">
         <img
           v-if="movie.multimedia"
-          class="rounded-t-lg w-full"
+          class="rounded-t-md w-full"
           :src="movie.multimedia.src"
           :alt="movie.display_title"
         />
         <img
           v-if="movie.multimedia === null"
-          class="rounded-t-lg block w-full"
+          class="rounded-t-md block w-full"
           src="https://via.placeholder.com/420x280?text=FPO"
           alt="FPO"
         />
